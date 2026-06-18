@@ -186,6 +186,25 @@ class DataRepo:
             session.delete(db_branch)
             session.commit()
             return True
+    
+    def clear_database(self):
+        """Очищает все данные из таблиц БД, сохраняя саму структуру таблиц."""
+        with self.Session() as session:
+            try:
+                # Так как настроен cascade="all, delete-orphan", 
+                # удаление из DBBankBranch автоматически удалит данные из DBExchangeRate
+                session.query(DBBankBranch).delete()
+                
+                # На случай, если есть сироты или для полной уверенности,
+                # можно явно очистить и вторую таблицу:
+                session.query(DBExchangeRate).delete()
+                
+                session.commit()
+                print("База данных успешно очищена (структура сохранена).")
+            except Exception as e:
+                session.rollback()
+                print(f"Ошибка при очистке базы данных: {e}")
+                raise e
 
 
 def main():

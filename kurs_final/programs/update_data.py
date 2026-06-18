@@ -67,6 +67,8 @@ def get_data(type: Link):
         ans = update_data(type) 
         return ans 
     else:
+        repo = DataRepo()
+        repo.clear_database()
         parser = Parser(True)
         bank_branches = parser.get_branch(type)
         return bank_branches
