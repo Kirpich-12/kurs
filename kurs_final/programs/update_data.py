@@ -3,16 +3,14 @@ from parser import Parser
 from models import Link, Api_var
 
 from datetime import date
-import os
 
-# УБРАЛИ глобальный импорт cart.py, чтобы не было конфликта (циклического импорта)
 
 USD = Link.USD
 EUR = Link.EUR
 CNY = Link.CNY
 CHF = Link.CHF  # Швейцарский франк
-DAMP_FILE = "data_damp.txt"
 
+DAMP_FILE = "data_damp.txt"
 
 
 def update_data(src: Link):
@@ -33,6 +31,7 @@ def date_check() -> bool:
     Возвращает True, если дата совпадает с сегодняшней (данные актуальны).
     Возвращает False, если файла нет, он пуст или дата старая.
     """
+    print('gg')
     try:
         with open(DAMP_FILE, "r", encoding="utf-8") as f:
             saved_date = f.read().strip()
