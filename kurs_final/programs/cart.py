@@ -7,7 +7,8 @@ from folium.plugins import HeatMap
 from folium.plugins import MarkerCluster
 
 from update_data import get_data
-from models import Link
+from models import Link, BankBranch
+
 
 
 class DataLoader:
@@ -18,26 +19,28 @@ class DataLoader:
     
     def load_data(self) -> pd.DataFrame:
         """Запрашивает данные через парсер/кэш и возвращает DataFrame"""
-        print(f"[INFO] Получение данных для {self.currency.name}...")
+        branches = get_data(self.currency)
+        return self._convert_to_dataframe(branches)
+
+    def _convert_to_dataframe(self, branches: list[BankBranch]) -> pd.DataFrame:
+        records = []
+        for branch in branches:
+            record = {
+                "branch_id": branch.id,
+                "bank_name": branch.bank_org.name,
+            "address": branch.address,
+            "lon": branch.coords.lon,
+            "lat": branch.coords.lat,
+        }
         
-        # ВАЖНО: вызываем get_data напрямую, чтобы получить массив данных и разорвать бесконечный цикл!
-        raw_data = get_data(self.currency)
-
-        # Преобразуем полученные списки/кортежи в DataFrame
-        df = pd.DataFrame([
-            {
-                "address": rec[0],
-                "bank_name": rec[1],
-                "sell_course": float(rec[2]),
-                "buy_course": float(rec[3]),
-                "lat": float(rec[4][0]),
-                "lon": float(rec[4][1])
-            }
-            for rec in raw_data
-        ])
-
-        print(f"[INFO] Данные успешно загружены. Найдено отделений: {len(df)}")
-        return df
+        # Превращаем каждый курс в отдельную колонку формата `from_to` (например, usd_byn)
+        for rate in branch.exchange_rates:
+            col_name = f"{rate.curr_from.value}_{rate.curr_to.value}"
+            record[col_name] = rate.rate
+            
+        records.append(record)
+        
+        return pd.DataFrame(records)
 
 class DataProcessor:
     """Обработка трансформаций и вычислений данных"""
