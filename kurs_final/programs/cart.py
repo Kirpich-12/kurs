@@ -28,19 +28,28 @@ class DataLoader:
             record = {
                 "branch_id": branch.id,
                 "bank_name": branch.bank_org.name,
-            "address": branch.address,
-            "lon": branch.coords.lon,
-            "lat": branch.coords.lat,
-        }
-        
-        # Превращаем каждый курс в отдельную колонку формата `from_to` (например, usd_byn)
-        for rate in branch.exchange_rates:
-            col_name = f"{rate.curr_from.value}_{rate.curr_to.value}"
-            record[col_name] = rate.rate
-            
-        records.append(record)
-        
-        return pd.DataFrame(records)
+                "address": branch.address,
+                "lon": branch.coords.lon,
+                "lat": branch.coords.lat,
+                "buy_course": None,
+                "sell_course": None,
+            }
+
+            # Маппим курсы: парсер передает buy_course как BYN->USD, sell_course как USD->BYN
+            for rate in branch.exchange_rates:
+                if rate.curr_from.value == "byn" and rate.curr_to.value == "usd":
+                    record["buy_course"] = float(rate.rate)
+                elif rate.curr_from.value == "usd" and rate.curr_to.value == "byn":
+                    record["sell_course"] = float(rate.rate)
+
+            records.append(record)
+
+        df = pd.DataFrame(records)
+
+        if df["buy_course"].isna().all():
+            raise ValueError(f"No buy_course (BYN->USD) rates found. Available branches: {len(df)}. Check if parser returned data with correct exchange rates.")
+
+        return df.dropna(subset=["buy_course"])
 
 class DataProcessor:
     """Обработка трансформаций и вычислений данных"""
@@ -49,6 +58,10 @@ class DataProcessor:
     def compute_weight(df: pd.DataFrame) -> pd.DataFrame:
         """Вычисление веса: более низкий курс = более высокое влияние"""
         df_copy = df.copy()
+
+        if "buy_course" not in df_copy.columns:
+            raise ValueError("Column 'buy_course' not found in dataframe. Check if exchange rates are being parsed correctly.")
+
         df_copy["weight_raw"] = 1 / df_copy["buy_course"]
 
         min_w, max_w = df_copy["weight_raw"].min(), df_copy["weight_raw"].max()
@@ -83,10 +96,10 @@ class MapBuilder:
         heat_data = df[["lat", "lon", "weight"]].values.tolist()
         HeatMap(
             heat_data,
-            radius=15,
-            blur=12,
-            min_opacity=0.25,
-            max_zoom=17
+            radius=20,
+            blur=15,
+            min_opacity=0.3,
+            max_zoom=18
         ).add_to(self.map)
         return self
     
@@ -119,16 +132,25 @@ class MapBuilder:
         return self
     
     def add_best_rate_marker(self, df: pd.DataFrame) -> "MapBuilder":
-        """Добавление звездного маркера для лучшего курса"""
-        best = df.loc[df["buy_course"].idxmin()]
-        popup = f"🔥 <b>ЛУЧШИЙ КУРС</b><br><b>{best['bank_name']}</b><br>{best['buy_course']}<br>{best['address']}"
+        """Добавление звездных маркеров для лучшего курса покупки и продажи"""
+        best_buy = df.loc[df["buy_course"].idxmin()]
+        popup_buy = f"★ <b>ЛУЧШАЯ ПОКУПКА</b><br><b>{best_buy['bank_name']}</b><br>Курс: {best_buy['buy_course']}<br>{best_buy['address']}"
 
         folium.Marker(
-            location=[best["lat"], best["lon"]],
+            location=[best_buy["lat"], best_buy["lon"]],
             icon=folium.Icon(color="green", icon="star", prefix="fa"),
-            popup=popup
+            popup=popup_buy
         ).add_to(self.map)
-        
+
+        best_sell = df.loc[df["sell_course"].idxmax()]
+        popup_sell = f"★ <b>ЛУЧШАЯ ПРОДАЖА</b><br><b>{best_sell['bank_name']}</b><br>Курс: {best_sell['sell_course']}<br>{best_sell['address']}"
+
+        folium.Marker(
+            location=[best_sell["lat"], best_sell["lon"]],
+            icon=folium.Icon(color="blue", icon="star", prefix="fa"),
+            popup=popup_sell
+        ).add_to(self.map)
+
         return self
     
     def save(self, filename: str) -> str:

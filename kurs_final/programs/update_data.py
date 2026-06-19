@@ -63,13 +63,16 @@ def set_update_date():
 
 def get_data(type: Link):
     if date_check():
-        ans = update_data(type) 
-        return ans 
+        repo = DataRepo()
+        return repo.list_bank_branches()
     else:
         repo = DataRepo()
         repo.clear_database()
         parser = Parser(True)
         bank_branches = parser.get_branch(type)
+        for branch in bank_branches:
+            repo.set_bank_branch(branch)
+        set_update_date()
         return bank_branches
 
 
