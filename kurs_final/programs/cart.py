@@ -19,23 +19,31 @@ class DataLoader:
     def load_data(self) -> pd.DataFrame:
         """Запрашивает данные через парсер/кэш и возвращает DataFrame"""
         print(f"[INFO] Получение данных для {self.currency.name}...")
-        
-        # ВАЖНО: вызываем get_data напрямую, чтобы получить массив данных и разорвать бесконечный цикл!
+
         raw_data = get_data(self.currency)
 
-        # Преобразуем полученные списки/кортежи в DataFrame
-        df = pd.DataFrame([
-            {
-                "address": rec[0],
-                "bank_name": rec[1],
-                "sell_course": float(rec[2]),
-                "buy_course": float(rec[3]),
-                "lat": float(rec[4][0]),
-                "lon": float(rec[4][1])
-            }
-            for rec in raw_data
-        ])
+        data = []
+        for branch in raw_data:
+            buy_rate = None
+            sell_rate = None
 
+            for rate in branch.exchange_rates:
+                if rate.curr_to == "byn":
+                    buy_rate = rate.rate
+                elif rate.curr_from == "byn":
+                    sell_rate = rate.rate
+
+            if buy_rate and sell_rate:
+                data.append({
+                    "address": branch.address,
+                    "bank_name": str(branch.bank_org),
+                    "sell_course": float(sell_rate),
+                    "buy_course": float(buy_rate),
+                    "lat": float(branch.coords.lat),
+                    "lon": float(branch.coords.lon)
+                })
+
+        df = pd.DataFrame(data)
         print(f"[INFO] Данные успешно загружены. Найдено отделений: {len(df)}")
         return df
 
@@ -115,17 +123,30 @@ class MapBuilder:
         
         return self
     
-    def add_best_rate_marker(self, df: pd.DataFrame) -> "MapBuilder":
-        """Добавление звездного маркера для лучшего курса"""
+    def add_best_buy_marker(self, df: pd.DataFrame) -> "MapBuilder":
+        """Добавление маркера для лучшей покупки (минимальный курс покупки)"""
         best = df.loc[df["buy_course"].idxmin()]
-        popup = f"🔥 <b>ЛУЧШИЙ КУРС</b><br><b>{best['bank_name']}</b><br>{best['buy_course']}<br>{best['address']}"
+        popup = f"💰 <b>ЛУЧШАЯ ПОКУПКА</b><br><b>{best['bank_name']}</b><br>Курс: {best['buy_course']}<br>{best['address']}"
 
         folium.Marker(
             location=[best["lat"], best["lon"]],
-            icon=folium.Icon(color="green", icon="star", prefix="fa"),
+            icon=folium.Icon(color="green", icon="arrow-down", prefix="fa"),
             popup=popup
         ).add_to(self.map)
-        
+
+        return self
+
+    def add_best_sell_marker(self, df: pd.DataFrame) -> "MapBuilder":
+        """Добавление маркера для лучшей продажи (максимальный курс продажи)"""
+        best = df.loc[df["sell_course"].idxmax()]
+        popup = f"📈 <b>ЛУЧШАЯ ПРОДАЖА</b><br><b>{best['bank_name']}</b><br>Курс: {best['sell_course']}<br>{best['address']}"
+
+        folium.Marker(
+            location=[best["lat"], best["lon"]],
+            icon=folium.Icon(color="blue", icon="arrow-up", prefix="fa"),
+            popup=popup
+        ).add_to(self.map)
+
         return self
     
     def save(self, filename: str) -> str:
@@ -162,14 +183,14 @@ class ExchangeMap:
     
     def build(self) -> "ExchangeMap":
         """Построение полной карты со всеми слоями"""
-        # Теперь загрузка происходит напрямую из update_data
         self.df = self.data_loader.load_data()
         self.df = DataProcessor.compute_weight(self.df)
-        
+
         self.map_builder.add_heatmap(self.df)
         self.map_builder.add_markers(self.df)
-        self.map_builder.add_best_rate_marker(self.df)
-        
+        self.map_builder.add_best_buy_marker(self.df)
+        self.map_builder.add_best_sell_marker(self.df)
+
         return self
     
     def save_and_open(self, filename: str = "generated_heatmap.html") -> None:

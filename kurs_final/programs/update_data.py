@@ -1,6 +1,6 @@
 from repo import DataRepo
 from parser import Parser
-from models import Link, Api_var
+from models import Link, Api_var, Currency
 
 from datetime import date
 
@@ -82,10 +82,39 @@ def get_card(type: Link):
     map_builder.save_and_open()
 
 
+def format_for_tg(branches: list):
+    """Форматирует данные для ТГ бота: топ 5 для покупки и топ 5 для продажи"""
+    if not branches:
+        return {"buy": [], "sell": []}
+
+    # Фильтруем ветки по наличию курсов покупки/продажи
+    buy_branches = []
+    sell_branches = []
+
+    for branch in branches:
+        for rate in branch.exchange_rates:
+            # Покупка: BYN -> Currency (нужна минимальная ставка)
+            if rate.curr_from == Currency.BYN:
+                buy_branches.append((branch, rate.rate))
+            # Продажа: Currency -> BYN (нужна максимальная ставка)
+            elif rate.curr_to == Currency.BYN:
+                sell_branches.append((branch, rate.rate))
+
+    # Сортируем и берем топ 5
+    top_5_buy = sorted(buy_branches, key=lambda x: x[1])[:5]
+    top_5_sell = sorted(sell_branches, key=lambda x: x[1], reverse=True)[:5]
+
+    return {
+        "buy": [branch for branch, _ in top_5_buy],
+        "sell": [branch for branch, _ in top_5_sell]
+    }
+
+
 def get_back(var: Api_var, type: Link):
     """Единая точка входа для получения данных"""
-    if var == Api_var.BOT: 
-        return get_data(type)
+    if var == Api_var.BOT:
+        data = get_data(type)
+        return format_for_tg(data)
     elif var == Api_var.CARD:
         return get_card(type)
 

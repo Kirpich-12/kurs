@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_bba559052f624aebe8852dad2ee0c9cf {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_bba559052f624aebe8852dad2ee0c9cf" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_bba559052f624aebe8852dad2ee0c9cf = L.map(
+                "map_bba559052f624aebe8852dad2ee0c9cf",
+                {
+                    center: [53.904, 27.5616],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_ca53de7538d750434530303ad297190b = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_ca53de7538d750434530303ad297190b.addTo(map_bba559052f624aebe8852dad2ee0c9cf);
+        
+    
+            var heat_map_15682909ce5e535e3e9339e7b15cf2a9 = L.heatLayer(
+                [[27.5523, 53.9142, 0.020839051922236174], [27.433165060188, 53.927832074704, 0.23897016421868017], [27.638305, 53.861235, 0.23897016421868017], [27.567184, 53.92192, 0.012596003269666846], [27.567184, 53.92192, 0.012596003269666846], [27.567184, 53.92192, 0.012596003269666846], [27.567184, 53.92192, 0.012596003269666846], [27.682899106418, 53.946003597018, 0.0], [27.554689, 53.890128, 0.0045588049400514755], [27.592814, 53.971657, 0.574074357281644], [27.555604932541, 53.912905944393, 0.05341004862038663], [27.52429, 53.918461, 0.05341004862038663], [27.440172, 53.926499, 0.03169749364773281], [27.509846, 53.927029, 0.03169749364773281], [27.527327, 53.908039, 0.05341004862038663], [27.470185, 53.908851, 0.020839051922236174], [27.517472, 53.926266, 0.0045588049400514755], [27.43233, 53.90867, 0.020839051922236174], [27.470185, 53.908851, 0.020839051922236174], [27.548563, 53.867023, 0.020839051922236174], [27.538564865745, 53.888775560275, 0.020839051922236174], [27.587845944404, 53.916078090111, 0.020839051922236174], [27.612656482803, 53.924411007886, 0.020839051922236174], [27.546016175266, 53.868388066341, 0.020839051922236174], [27.441811514409, 53.905660290015, 0.020839051922236174], [27.715100874762, 53.952324328667, 0.020839051922236174], [27.690330525131, 53.945203670705, 0.020839051922236174], [27.476675509583, 53.851097283387, 0.020839051922236174], [27.430503901447, 53.908700623941, 0.020839051922236174], [27.431319292988, 53.909524147734, 0.020839051922236174], [27.624038220901, 53.963160266557, 0.020839051922236174], [27.625903531086, 53.876489394463, 0.020839051922236174], [27.58, 53.9188, 0.10587695722618104], [27.6237, 53.8753, 0.10587695722618104], [27.434233739428, 53.901655827999, 0.10587695722618104], [27.6929, 53.9476, 0.10587695722618104], [27.5875, 53.9289, 0.999614311024075], [27.456, 53.8517, 0.10587695722618104], [27.4442, 53.926, 0.999614311024075], [27.476761, 53.858474, 0.999614311024075], [27.555758, 53.916782, 0.020839051922236174], [27.686499, 53.943944, 0.020839051922236174], [27.519776, 53.895374, 0.020839051922236174], [27.546924, 53.892405, 0.020839051922236174], [27.480569, 53.849429, 0.020839051922236174], [27.4985, 53.9212, 0.020839051922236174], [27.558, 53.9005, 0.10587695722618104], [27.6303, 53.8765, 0.10587695722618104], [27.559845856147, 53.899259160549, 0.020839051922236174]],
+                {
+  "minOpacity": 0.25,
+  "maxZoom": 17,
+  "radius": 15,
+  "blur": 12,
+}
+            );
+        
+    
+            heat_map_15682909ce5e535e3e9339e7b15cf2a9.addTo(map_bba559052f624aebe8852dad2ee0c9cf);
+        
+    
+            var marker_cluster_d2f4e4f360a11f4b36716ce67faf1178 = L.markerClusterGroup(
+                {
+  "disableClusteringAtZoom": 15,
+  "spiderfyOnMaxZoom": true,
+  "zoomToBoundsOnClick": true,
+  "showCoverageOnHover": false,
+}
+            );
+        
+    
+            var circle_marker_415eeac66ccde005cfaf2e78fdb8b60f = L.circleMarker(
+                [27.5523, 53.9142],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_9961218e75344f2dbf111e410f88c626 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7298cc79a1844d67a9c32d20d1c734c5 = $(`<div id="html_7298cc79a1844d67a9c32d20d1c734c5" style="width: 100.0%; height: 100.0%;">         <b>Банк Дабрабыт</b><br>         <b>г. Минск, ул. Коммунистическая, 49, пом.1 (вход со стороны гостиницы "Беларусь")</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.835<br>         </div>`)[0];
+                popup_9961218e75344f2dbf111e410f88c626.setContent(html_7298cc79a1844d67a9c32d20d1c734c5);
+            
+        
+
+        circle_marker_415eeac66ccde005cfaf2e78fdb8b60f.bindPopup(popup_9961218e75344f2dbf111e410f88c626)
+        ;
+
+        
+    
+    
+            var circle_marker_2d4f9ea16b922a55b033c2a56f13964f = L.circleMarker(
+                [27.433165060188, 53.927832074704],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_06d323cbbe0bb155cfbafce71b3bc5c0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_344757f4438ca2da7ef2383eabcddacb = $(`<div id="html_344757f4438ca2da7ef2383eabcddacb" style="width: 100.0%; height: 100.0%;">         <b>БНБ-Банк</b><br>         <b>Минск, ул. Налибокская, 36 (ТЦ «Квадро»)</b><br>             Курс покупки: 2.802<br>             Курс продажи: 2.835<br>         </div>`)[0];
+                popup_06d323cbbe0bb155cfbafce71b3bc5c0.setContent(html_344757f4438ca2da7ef2383eabcddacb);
+            
+        
+
+        circle_marker_2d4f9ea16b922a55b033c2a56f13964f.bindPopup(popup_06d323cbbe0bb155cfbafce71b3bc5c0)
+        ;
+
+        
+    
+    
+            var circle_marker_31e5769df5a742814f0c351f90e4c20a = L.circleMarker(
+                [27.638305, 53.861235],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_17b4bf911e67c1cf7dcd7f24da574af3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9e0b12e4e1311295f805856aef47f9c0 = $(`<div id="html_9e0b12e4e1311295f805856aef47f9c0" style="width: 100.0%; height: 100.0%;">         <b>БНБ-Банк</b><br>         <b>Минск, ул. Рудобельская,3 (ТЦ «Greentime»)</b><br>             Курс покупки: 2.802<br>             Курс продажи: 2.835<br>         </div>`)[0];
+                popup_17b4bf911e67c1cf7dcd7f24da574af3.setContent(html_9e0b12e4e1311295f805856aef47f9c0);
+            
+        
+
+        circle_marker_31e5769df5a742814f0c351f90e4c20a.bindPopup(popup_17b4bf911e67c1cf7dcd7f24da574af3)
+        ;
+
+        
+    
+    
+            var circle_marker_bc0be2ed0f4f6e884f088d76498151dd = L.circleMarker(
+                [27.567184, 53.92192],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_632c03f76ef28d1a76ec60c7107138e2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ca6817aaf700c716b10d5e7cd1cfe159 = $(`<div id="html_ca6817aaf700c716b10d5e7cd1cfe159" style="width: 100.0%; height: 100.0%;">         <b>Нео Банк Азия</b><br>         <b>г. Минск, ул. В. Хоружей, 20-2</b><br>             Курс покупки: 2.822<br>             Курс продажи: 2.835<br>         </div>`)[0];
+                popup_632c03f76ef28d1a76ec60c7107138e2.setContent(html_ca6817aaf700c716b10d5e7cd1cfe159);
+            
+        
+
+        circle_marker_bc0be2ed0f4f6e884f088d76498151dd.bindPopup(popup_632c03f76ef28d1a76ec60c7107138e2)
+        ;
+
+        
+    
+    
+            var circle_marker_a48c206e85866dfe99995b7e15fef307 = L.circleMarker(
+                [27.567184, 53.92192],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_7533060674248166d9cf762a43373312 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ffe571f65be25bedee9802bb4bb92d50 = $(`<div id="html_ffe571f65be25bedee9802bb4bb92d50" style="width: 100.0%; height: 100.0%;">         <b>Нео Банк Азия</b><br>         <b>г. Минск, ул. В. Хоружей, 20-2</b><br>             Курс покупки: 2.822<br>             Курс продажи: 2.835<br>         </div>`)[0];
+                popup_7533060674248166d9cf762a43373312.setContent(html_ffe571f65be25bedee9802bb4bb92d50);
+            
+        
+
+        circle_marker_a48c206e85866dfe99995b7e15fef307.bindPopup(popup_7533060674248166d9cf762a43373312)
+        ;
+
+        
+    
+    
+            var circle_marker_217938bc9da583c3174431eb12583f99 = L.circleMarker(
+                [27.567184, 53.92192],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_ae78f2f950c54a51576366086481644d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a226980417af0c39b78075968148f749 = $(`<div id="html_a226980417af0c39b78075968148f749" style="width: 100.0%; height: 100.0%;">         <b>Нео Банк Азия</b><br>         <b>г. Минск, ул. В. Хоружей, 20-2</b><br>             Курс покупки: 2.822<br>             Курс продажи: 2.835<br>         </div>`)[0];
+                popup_ae78f2f950c54a51576366086481644d.setContent(html_a226980417af0c39b78075968148f749);
+            
+        
+
+        circle_marker_217938bc9da583c3174431eb12583f99.bindPopup(popup_ae78f2f950c54a51576366086481644d)
+        ;
+
+        
+    
+    
+            var circle_marker_ceab7f7505b5313159f857871f94057d = L.circleMarker(
+                [27.567184, 53.92192],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_f0d444f4082d24f6aa721cf5d3ffb7b9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_379e2d74ce8b2878d79688aeda5cf6da = $(`<div id="html_379e2d74ce8b2878d79688aeda5cf6da" style="width: 100.0%; height: 100.0%;">         <b>Нео Банк Азия</b><br>         <b>г. Минск, ул. В. Хоружей, 20-2</b><br>             Курс покупки: 2.822<br>             Курс продажи: 2.835<br>         </div>`)[0];
+                popup_f0d444f4082d24f6aa721cf5d3ffb7b9.setContent(html_379e2d74ce8b2878d79688aeda5cf6da);
+            
+        
+
+        circle_marker_ceab7f7505b5313159f857871f94057d.bindPopup(popup_f0d444f4082d24f6aa721cf5d3ffb7b9)
+        ;
+
+        
+    
+    
+            var circle_marker_24ec47ced1f1f9da4b0eeb15d2c6cbb2 = L.circleMarker(
+                [27.682899106418, 53.946003597018],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_6d1c580b9e2facfd3a5530953dd5e47b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_06bdb5ed589e60967dbb27e4aaeda6ea = $(`<div id="html_06bdb5ed589e60967dbb27e4aaeda6ea" style="width: 100.0%; height: 100.0%;">         <b>СтатусБанк</b><br>         <b>Минск и Минский р-н, г. Минск, пр. Независимости, 177, БЦ "Порт" (секция 2)</b><br>             Курс покупки: 2.831<br>             Курс продажи: 2.835<br>         </div>`)[0];
+                popup_6d1c580b9e2facfd3a5530953dd5e47b.setContent(html_06bdb5ed589e60967dbb27e4aaeda6ea);
+            
+        
+
+        circle_marker_24ec47ced1f1f9da4b0eeb15d2c6cbb2.bindPopup(popup_6d1c580b9e2facfd3a5530953dd5e47b)
+        ;
+
+        
+    
+    
+            var circle_marker_74ea65beac28158d4ca3524e342715c3 = L.circleMarker(
+                [27.554689, 53.890128],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_38e7262b8d0489a999a718d1f00e65fc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_725f1d38e0702ce41ea4fd64b892604b = $(`<div id="html_725f1d38e0702ce41ea4fd64b892604b" style="width: 100.0%; height: 100.0%;">         <b>Банк РРБ</b><br>         <b>г. Минск, ул. Бобруйская, 6 (ТРЦ Galileo)</b><br>             Курс покупки: 2.825<br>             Курс продажи: 2.835<br>         </div>`)[0];
+                popup_38e7262b8d0489a999a718d1f00e65fc.setContent(html_725f1d38e0702ce41ea4fd64b892604b);
+            
+        
+
+        circle_marker_74ea65beac28158d4ca3524e342715c3.bindPopup(popup_38e7262b8d0489a999a718d1f00e65fc)
+        ;
+
+        
+    
+    
+            var circle_marker_8399e95de77a9f7bddc018d920b46be3 = L.circleMarker(
+                [27.592814, 53.971657],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_d1df0d6af971b008af394dc787640a38 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d62d4131c8253e5f5532c3ee597df8a1 = $(`<div id="html_d62d4131c8253e5f5532c3ee597df8a1" style="width: 100.0%; height: 100.0%;">         <b>Банк РРБ</b><br>         <b>г. Минск, деревня Цна, Папернянский сельсовет, Минский район, ул. Юбилейная улица, 8</b><br>             Курс покупки: 2.79<br>             Курс продажи: 2.835<br>         </div>`)[0];
+                popup_d1df0d6af971b008af394dc787640a38.setContent(html_d62d4131c8253e5f5532c3ee597df8a1);
+            
+        
+
+        circle_marker_8399e95de77a9f7bddc018d920b46be3.bindPopup(popup_d1df0d6af971b008af394dc787640a38)
+        ;
+
+        
+    
+    
+            var circle_marker_3061bcdcbefb42dd805e5297669552d7 = L.circleMarker(
+                [27.555604932541, 53.912905944393],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_b16b4ec8d10ca774cf06b7231467adcc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ad552811e4e22c208ff48714e84bab44 = $(`<div id="html_ad552811e4e22c208ff48714e84bab44" style="width: 100.0%; height: 100.0%;">         <b>Банк Решение</b><br>         <b>г. Минск, ул. Сторожовская,8</b><br>             Курс покупки: 2.815<br>             Курс продажи: 2.835<br>         </div>`)[0];
+                popup_b16b4ec8d10ca774cf06b7231467adcc.setContent(html_ad552811e4e22c208ff48714e84bab44);
+            
+        
+
+        circle_marker_3061bcdcbefb42dd805e5297669552d7.bindPopup(popup_b16b4ec8d10ca774cf06b7231467adcc)
+        ;
+
+        
+    
+    
+            var circle_marker_f99f891ee6ac24c88f30a7397f46276e = L.circleMarker(
+                [27.52429, 53.918461],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_4882f2ba8cf5d398bc9d7eea95bf8486 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b672c36f67ca0d84ecc8abe1eb6141c3 = $(`<div id="html_b672c36f67ca0d84ecc8abe1eb6141c3" style="width: 100.0%; height: 100.0%;">         <b>Банк Решение</b><br>         <b>г. Минск, ул. Игнатенко, 11</b><br>             Курс покупки: 2.815<br>             Курс продажи: 2.835<br>         </div>`)[0];
+                popup_4882f2ba8cf5d398bc9d7eea95bf8486.setContent(html_b672c36f67ca0d84ecc8abe1eb6141c3);
+            
+        
+
+        circle_marker_f99f891ee6ac24c88f30a7397f46276e.bindPopup(popup_4882f2ba8cf5d398bc9d7eea95bf8486)
+        ;
+
+        
+    
+    
+            var circle_marker_22f4f2be63b882ff91b439ecca4b6183 = L.circleMarker(
+                [27.440172, 53.926499],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_620512637bf560a790b4077453ab36e8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_26b59db3b5cf3cd00c165b72c58794b4 = $(`<div id="html_26b59db3b5cf3cd00c165b72c58794b4" style="width: 100.0%; height: 100.0%;">         <b>Банк РРБ</b><br>         <b>г. Минск, ул. Налибокская, 1-1 (ТЦ Караван)</b><br>             Курс покупки: 2.818<br>             Курс продажи: 2.838<br>         </div>`)[0];
+                popup_620512637bf560a790b4077453ab36e8.setContent(html_26b59db3b5cf3cd00c165b72c58794b4);
+            
+        
+
+        circle_marker_22f4f2be63b882ff91b439ecca4b6183.bindPopup(popup_620512637bf560a790b4077453ab36e8)
+        ;
+
+        
+    
+    
+            var circle_marker_4777e1f826e80fbd9e1de3a5edddf3a5 = L.circleMarker(
+                [27.509846, 53.927029],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_cf6b327e8962aa3aaa87fe9a72bcd77a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_869156fd7f8d5596524d3b2171eceebb = $(`<div id="html_869156fd7f8d5596524d3b2171eceebb" style="width: 100.0%; height: 100.0%;">         <b>Банк РРБ</b><br>         <b>г. Минск, ул. Тимирязева, 74 А (ТЦ Palazzo)</b><br>             Курс покупки: 2.818<br>             Курс продажи: 2.838<br>         </div>`)[0];
+                popup_cf6b327e8962aa3aaa87fe9a72bcd77a.setContent(html_869156fd7f8d5596524d3b2171eceebb);
+            
+        
+
+        circle_marker_4777e1f826e80fbd9e1de3a5edddf3a5.bindPopup(popup_cf6b327e8962aa3aaa87fe9a72bcd77a)
+        ;
+
+        
+    
+    
+            var circle_marker_98f2a9158197511fb8ec8fa6185cedd3 = L.circleMarker(
+                [27.527327, 53.908039],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_e10514f180067d1ae0a0214192baab6b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e8c26819223fc6a0dee872b82f391978 = $(`<div id="html_e8c26819223fc6a0dee872b82f391978" style="width: 100.0%; height: 100.0%;">         <b>Банк РРБ</b><br>         <b>г. Минск, ул. Кальварийская, 24 (ТЦ Корона)</b><br>             Курс покупки: 2.815<br>             Курс продажи: 2.838<br>         </div>`)[0];
+                popup_e10514f180067d1ae0a0214192baab6b.setContent(html_e8c26819223fc6a0dee872b82f391978);
+            
+        
+
+        circle_marker_98f2a9158197511fb8ec8fa6185cedd3.bindPopup(popup_e10514f180067d1ae0a0214192baab6b)
+        ;
+
+        
+    
+    
+            var circle_marker_175040ad40c14cc4616c1c0f788603f7 = L.circleMarker(
+                [27.470185, 53.908851],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_641b09fb8c42b916be88f691b9a3f733 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4506bb7d22d9bdd325e7c2e4c84ed2ea = $(`<div id="html_4506bb7d22d9bdd325e7c2e4c84ed2ea" style="width: 100.0%; height: 100.0%;">         <b>Банк РРБ</b><br>         <b>г. Минск, ул. Петра Глебки, 5-1 (ТЦ Скала), 0 этаж</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.838<br>         </div>`)[0];
+                popup_641b09fb8c42b916be88f691b9a3f733.setContent(html_4506bb7d22d9bdd325e7c2e4c84ed2ea);
+            
+        
+
+        circle_marker_175040ad40c14cc4616c1c0f788603f7.bindPopup(popup_641b09fb8c42b916be88f691b9a3f733)
+        ;
+
+        
+    
+    
+            var circle_marker_7e46a482cda036e7c22062979eaa9fb8 = L.circleMarker(
+                [27.517472, 53.926266],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_a852654b3e378f6d83644b4f37ff8c11 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_36820a80222a47536c016ebcb027c6a1 = $(`<div id="html_36820a80222a47536c016ebcb027c6a1" style="width: 100.0%; height: 100.0%;">         <b>Банк РРБ</b><br>         <b>г. Минск, пр-т. Победителей, 65 (ТЦ Замок)</b><br>             Курс покупки: 2.825<br>             Курс продажи: 2.838<br>         </div>`)[0];
+                popup_a852654b3e378f6d83644b4f37ff8c11.setContent(html_36820a80222a47536c016ebcb027c6a1);
+            
+        
+
+        circle_marker_7e46a482cda036e7c22062979eaa9fb8.bindPopup(popup_a852654b3e378f6d83644b4f37ff8c11)
+        ;
+
+        
+    
+    
+            var circle_marker_0b201c65ed572e8a453fd933fd77fe42 = L.circleMarker(
+                [27.43233, 53.90867],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_04e593d319ed273214a8b4b52bfb7032 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8434b78f1bcee6c5e6c587e8f55becaf = $(`<div id="html_8434b78f1bcee6c5e6c587e8f55becaf" style="width: 100.0%; height: 100.0%;">         <b>Банк РРБ</b><br>         <b>г. Минск, ул. Притыцкого, 156-32 (ТЦ Green City)</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.838<br>         </div>`)[0];
+                popup_04e593d319ed273214a8b4b52bfb7032.setContent(html_8434b78f1bcee6c5e6c587e8f55becaf);
+            
+        
+
+        circle_marker_0b201c65ed572e8a453fd933fd77fe42.bindPopup(popup_04e593d319ed273214a8b4b52bfb7032)
+        ;
+
+        
+    
+    
+            var circle_marker_d32438f7f539adfbacbd6e4e6dd94bd0 = L.circleMarker(
+                [27.470185, 53.908851],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_bf2a5963ad10254dc18fd0f3b42fef26 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5891d959c7a294ff7499afc6fe76b76a = $(`<div id="html_5891d959c7a294ff7499afc6fe76b76a" style="width: 100.0%; height: 100.0%;">         <b>Банк РРБ</b><br>         <b>г. Минск, ул. Петра Глебки, 5-1 (ТЦ Скала), 1 этаж</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.838<br>         </div>`)[0];
+                popup_bf2a5963ad10254dc18fd0f3b42fef26.setContent(html_5891d959c7a294ff7499afc6fe76b76a);
+            
+        
+
+        circle_marker_d32438f7f539adfbacbd6e4e6dd94bd0.bindPopup(popup_bf2a5963ad10254dc18fd0f3b42fef26)
+        ;
+
+        
+    
+    
+            var circle_marker_657fb65fd94b1774690d22a5571c8ae7 = L.circleMarker(
+                [27.548563, 53.867023],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_f3c1872db0e7bd49806c847888008d71 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7e201f7ea7de676fadaf58648d647078 = $(`<div id="html_7e201f7ea7de676fadaf58648d647078" style="width: 100.0%; height: 100.0%;">         <b>Банк РРБ</b><br>         <b>г. Минск, ул. Братская, 18 (ТОЦ Авиа Молл)</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.838<br>         </div>`)[0];
+                popup_f3c1872db0e7bd49806c847888008d71.setContent(html_7e201f7ea7de676fadaf58648d647078);
+            
+        
+
+        circle_marker_657fb65fd94b1774690d22a5571c8ae7.bindPopup(popup_f3c1872db0e7bd49806c847888008d71)
+        ;
+
+        
+    
+    
+            var circle_marker_7afa9c5494ef6d05bca0787c5ee5a8c4 = L.circleMarker(
+                [27.538564865745, 53.888775560275],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_f95de9985392c0f5d95df6194c40c48e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e0a5319eedfbbebdcd4c39762ac2cc36 = $(`<div id="html_e0a5319eedfbbebdcd4c39762ac2cc36" style="width: 100.0%; height: 100.0%;">         <b>Банк ВТБ (Беларусь)</b><br>         <b>г. Минск, ул. Московская, 14</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_f95de9985392c0f5d95df6194c40c48e.setContent(html_e0a5319eedfbbebdcd4c39762ac2cc36);
+            
+        
+
+        circle_marker_7afa9c5494ef6d05bca0787c5ee5a8c4.bindPopup(popup_f95de9985392c0f5d95df6194c40c48e)
+        ;
+
+        
+    
+    
+            var circle_marker_05a3b05008e274505dee4fa32cfaef12 = L.circleMarker(
+                [27.587845944404, 53.916078090111],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_285c9eabb879a59812a5c497d09d5337 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6755cf9a2feea431baa9587147750d29 = $(`<div id="html_6755cf9a2feea431baa9587147750d29" style="width: 100.0%; height: 100.0%;">         <b>Банк ВТБ (Беларусь)</b><br>         <b>г. Минск, ул. Гикало, 3</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_285c9eabb879a59812a5c497d09d5337.setContent(html_6755cf9a2feea431baa9587147750d29);
+            
+        
+
+        circle_marker_05a3b05008e274505dee4fa32cfaef12.bindPopup(popup_285c9eabb879a59812a5c497d09d5337)
+        ;
+
+        
+    
+    
+            var circle_marker_e9569174a326410623c6bfe918ab1644 = L.circleMarker(
+                [27.612656482803, 53.924411007886],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_9b847fe2c965936064e9fd4e79bd47b5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_03cf92f594eae262a454c4a9c1739fe8 = $(`<div id="html_03cf92f594eae262a454c4a9c1739fe8" style="width: 100.0%; height: 100.0%;">         <b>Банк ВТБ (Беларусь)</b><br>         <b>г. Минск, пр-т Независимости, 93</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_9b847fe2c965936064e9fd4e79bd47b5.setContent(html_03cf92f594eae262a454c4a9c1739fe8);
+            
+        
+
+        circle_marker_e9569174a326410623c6bfe918ab1644.bindPopup(popup_9b847fe2c965936064e9fd4e79bd47b5)
+        ;
+
+        
+    
+    
+            var circle_marker_ce4200e8a5bbc626da01eb45d5ef38c4 = L.circleMarker(
+                [27.546016175266, 53.868388066341],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_a7831b200e06b5a4155c111e9fe31130 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b91c1290f377d66f2aa1bd6555955555 = $(`<div id="html_b91c1290f377d66f2aa1bd6555955555" style="width: 100.0%; height: 100.0%;">         <b>Банк ВТБ (Беларусь)</b><br>         <b>г. Минск, ул. Николы Теслы, д. 20</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_a7831b200e06b5a4155c111e9fe31130.setContent(html_b91c1290f377d66f2aa1bd6555955555);
+            
+        
+
+        circle_marker_ce4200e8a5bbc626da01eb45d5ef38c4.bindPopup(popup_a7831b200e06b5a4155c111e9fe31130)
+        ;
+
+        
+    
+    
+            var circle_marker_a285e1a1fa10b381c34b9ff9afbf2630 = L.circleMarker(
+                [27.441811514409, 53.905660290015],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_569256b5622606c8dda2d393a383f53e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_12345df435f4d72e52c6a780613bc1eb = $(`<div id="html_12345df435f4d72e52c6a780613bc1eb" style="width: 100.0%; height: 100.0%;">         <b>Банк ВТБ (Беларусь)</b><br>         <b>г. Минск, ул. Притыцкого, 91</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_569256b5622606c8dda2d393a383f53e.setContent(html_12345df435f4d72e52c6a780613bc1eb);
+            
+        
+
+        circle_marker_a285e1a1fa10b381c34b9ff9afbf2630.bindPopup(popup_569256b5622606c8dda2d393a383f53e)
+        ;
+
+        
+    
+    
+            var circle_marker_f77a64d31a560223f19149e34bc28b4d = L.circleMarker(
+                [27.715100874762, 53.952324328667],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_88216eeae4e98f8d349a0e0747fe5833 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_511b9124f80afc3d571893364b9a08da = $(`<div id="html_511b9124f80afc3d571893364b9a08da" style="width: 100.0%; height: 100.0%;">         <b>Банк ВТБ (Беларусь)</b><br>         <b>г. Минск, пр-т Независимости, 202</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_88216eeae4e98f8d349a0e0747fe5833.setContent(html_511b9124f80afc3d571893364b9a08da);
+            
+        
+
+        circle_marker_f77a64d31a560223f19149e34bc28b4d.bindPopup(popup_88216eeae4e98f8d349a0e0747fe5833)
+        ;
+
+        
+    
+    
+            var circle_marker_4ff706bc4fb32549b8e2c7762998f43a = L.circleMarker(
+                [27.690330525131, 53.945203670705],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_092e79011e2a43968b6e92157a699e3d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1cd44155f5017825cd59f4351a355307 = $(`<div id="html_1cd44155f5017825cd59f4351a355307" style="width: 100.0%; height: 100.0%;">         <b>Банк ВТБ (Беларусь)</b><br>         <b>г. Минск, пр-т Независимости, 168/2</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_092e79011e2a43968b6e92157a699e3d.setContent(html_1cd44155f5017825cd59f4351a355307);
+            
+        
+
+        circle_marker_4ff706bc4fb32549b8e2c7762998f43a.bindPopup(popup_092e79011e2a43968b6e92157a699e3d)
+        ;
+
+        
+    
+    
+            var circle_marker_755d4a5e8bacba238c24ca2862b8fbb0 = L.circleMarker(
+                [27.476675509583, 53.851097283387],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_d0fadb5cbb011157b65715041d97c8c0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1c6390ac4aa8c98e0394d1bf63aaa8be = $(`<div id="html_1c6390ac4aa8c98e0394d1bf63aaa8be" style="width: 100.0%; height: 100.0%;">         <b>Банк ВТБ (Беларусь)</b><br>         <b>г. Минск, пр-т Дзержинского, 119</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_d0fadb5cbb011157b65715041d97c8c0.setContent(html_1c6390ac4aa8c98e0394d1bf63aaa8be);
+            
+        
+
+        circle_marker_755d4a5e8bacba238c24ca2862b8fbb0.bindPopup(popup_d0fadb5cbb011157b65715041d97c8c0)
+        ;
+
+        
+    
+    
+            var circle_marker_1939fbb4a367fa37c4b752d50a3b9972 = L.circleMarker(
+                [27.430503901447, 53.908700623941],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_376c9d5e5a81448605c600a5d4679414 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1cf209496393f6481ac228139db0ff84 = $(`<div id="html_1cf209496393f6481ac228139db0ff84" style="width: 100.0%; height: 100.0%;">         <b>Банк ВТБ (Беларусь)</b><br>         <b>г. Минск, ул. Притыцкого, 156-32 в ТЦ GreenCity</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_376c9d5e5a81448605c600a5d4679414.setContent(html_1cf209496393f6481ac228139db0ff84);
+            
+        
+
+        circle_marker_1939fbb4a367fa37c4b752d50a3b9972.bindPopup(popup_376c9d5e5a81448605c600a5d4679414)
+        ;
+
+        
+    
+    
+            var circle_marker_ca70c32fdd66a5fd67791b7d950a6cdb = L.circleMarker(
+                [27.431319292988, 53.909524147734],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_fe81f052e5a1994eedd8d418aade811d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4fad226f72e70f3f4b2c85440d041c80 = $(`<div id="html_4fad226f72e70f3f4b2c85440d041c80" style="width: 100.0%; height: 100.0%;">         <b>Банк ВТБ (Беларусь)</b><br>         <b>г. Минск, ул. Притыцкого, д.156-32 (ТЦ GreenCity)</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_fe81f052e5a1994eedd8d418aade811d.setContent(html_4fad226f72e70f3f4b2c85440d041c80);
+            
+        
+
+        circle_marker_ca70c32fdd66a5fd67791b7d950a6cdb.bindPopup(popup_fe81f052e5a1994eedd8d418aade811d)
+        ;
+
+        
+    
+    
+            var circle_marker_5d6b2a5f305920fe7b13b34b6f38ba3f = L.circleMarker(
+                [27.624038220901, 53.963160266557],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_f4f45cbe9b13e2f33ec1d849203bb1cb = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_48a554d80f0f7fa742893e5bbd5e43e4 = $(`<div id="html_48a554d80f0f7fa742893e5bbd5e43e4" style="width: 100.0%; height: 100.0%;">         <b>Банк ВТБ (Беларусь)</b><br>         <b>Минский р-н, Боровлянский с/с, д. 74/1, район д. Боровая (ТРЦ"Экспобел")</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_f4f45cbe9b13e2f33ec1d849203bb1cb.setContent(html_48a554d80f0f7fa742893e5bbd5e43e4);
+            
+        
+
+        circle_marker_5d6b2a5f305920fe7b13b34b6f38ba3f.bindPopup(popup_f4f45cbe9b13e2f33ec1d849203bb1cb)
+        ;
+
+        
+    
+    
+            var circle_marker_df0782237cf56773344cf896c016aeaf = L.circleMarker(
+                [27.625903531086, 53.876489394463],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_71c6c02769502f874973ecbfe492e429 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_47547daeba3a1eec2614488255265c6f = $(`<div id="html_47547daeba3a1eec2614488255265c6f" style="width: 100.0%; height: 100.0%;">         <b>Банк ВТБ (Беларусь)</b><br>         <b>Минск, пр-т. Партизанский, д.79 (ТРЦ "PRIZMA")</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_71c6c02769502f874973ecbfe492e429.setContent(html_47547daeba3a1eec2614488255265c6f);
+            
+        
+
+        circle_marker_df0782237cf56773344cf896c016aeaf.bindPopup(popup_71c6c02769502f874973ecbfe492e429)
+        ;
+
+        
+    
+    
+            var circle_marker_0d8696e6879e4ea5e33d47ea4ccdb5f8 = L.circleMarker(
+                [27.58, 53.9188],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_6c483f6e6da525b20f234ed91a0628c1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5eebe054ac3be21cb2e69c065ba4f447 = $(`<div id="html_5eebe054ac3be21cb2e69c065ba4f447" style="width: 100.0%; height: 100.0%;">         <b>Банк Дабрабыт</b><br>         <b>г. Минск, ул. В. Хоружей, 6 Б (Торговый центр "Зеркало", 1-ый этаж, отдельный вход со стороны ТЦ "Импульс", рядом станция метро "Пл.Я.Коласа")</b><br>             Курс покупки: 2.81<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_6c483f6e6da525b20f234ed91a0628c1.setContent(html_5eebe054ac3be21cb2e69c065ba4f447);
+            
+        
+
+        circle_marker_0d8696e6879e4ea5e33d47ea4ccdb5f8.bindPopup(popup_6c483f6e6da525b20f234ed91a0628c1)
+        ;
+
+        
+    
+    
+            var circle_marker_7af8d1deec2454f85ecd2c11f0d16a4f = L.circleMarker(
+                [27.6237, 53.8753],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_66b45e8a04d4cf0d87bf44e8a635d153 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fc050128f239af6f1bf808cec0e701b8 = $(`<div id="html_fc050128f239af6f1bf808cec0e701b8" style="width: 100.0%; height: 100.0%;">         <b>Банк Дабрабыт</b><br>         <b>г. Минск, пр. Партизанский, 46</b><br>             Курс покупки: 2.81<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_66b45e8a04d4cf0d87bf44e8a635d153.setContent(html_fc050128f239af6f1bf808cec0e701b8);
+            
+        
+
+        circle_marker_7af8d1deec2454f85ecd2c11f0d16a4f.bindPopup(popup_66b45e8a04d4cf0d87bf44e8a635d153)
+        ;
+
+        
+    
+    
+            var circle_marker_78c02ac09401893ab4a6501625ee2380 = L.circleMarker(
+                [27.434233739428, 53.901655827999],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_79230343e4136aab70abc9254f2e0cb8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9aaeded36ca257efe62aaeb3d77c1cb5 = $(`<div id="html_9aaeded36ca257efe62aaeb3d77c1cb5" style="width: 100.0%; height: 100.0%;">         <b>Банк Дабрабыт</b><br>         <b>г. Минск, ул. Лобанка, 22 (ст. метро Каменная Горка)</b><br>             Курс покупки: 2.81<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_79230343e4136aab70abc9254f2e0cb8.setContent(html_9aaeded36ca257efe62aaeb3d77c1cb5);
+            
+        
+
+        circle_marker_78c02ac09401893ab4a6501625ee2380.bindPopup(popup_79230343e4136aab70abc9254f2e0cb8)
+        ;
+
+        
+    
+    
+            var circle_marker_ff16a2b8c77a5b4aff381544f2f49979 = L.circleMarker(
+                [27.6929, 53.9476],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_350b6413a951d0dc492104dc2470caea = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_470b1b9820495e6cb20fec850863e4a6 = $(`<div id="html_470b1b9820495e6cb20fec850863e4a6" style="width: 100.0%; height: 100.0%;">         <b>Банк Дабрабыт</b><br>         <b>г. Минск, пр. Независимости, 185</b><br>             Курс покупки: 2.81<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_350b6413a951d0dc492104dc2470caea.setContent(html_470b1b9820495e6cb20fec850863e4a6);
+            
+        
+
+        circle_marker_ff16a2b8c77a5b4aff381544f2f49979.bindPopup(popup_350b6413a951d0dc492104dc2470caea)
+        ;
+
+        
+    
+    
+            var circle_marker_44500baecaca5b7d502aa2eaf38f49d7 = L.circleMarker(
+                [27.5875, 53.9289],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_82eeb54e4dcf8142e3e3df349f85365c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_36a6c0da4804031582a933875abc2b11 = $(`<div id="html_36a6c0da4804031582a933875abc2b11" style="width: 100.0%; height: 100.0%;">         <b>Банк Дабрабыт</b><br>         <b>г. Минск, Ул. Сурганова, 50 (ТЦ «РИГА»)</b><br>             Курс покупки: 2.78<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_82eeb54e4dcf8142e3e3df349f85365c.setContent(html_36a6c0da4804031582a933875abc2b11);
+            
+        
+
+        circle_marker_44500baecaca5b7d502aa2eaf38f49d7.bindPopup(popup_82eeb54e4dcf8142e3e3df349f85365c)
+        ;
+
+        
+    
+    
+            var circle_marker_549ce0f1f5c1808ca108f258e2cc9521 = L.circleMarker(
+                [27.456, 53.8517],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_39c069182b5aeb36acef9b0138be9d1e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_dc0932baf9dff0a6781192d19c2a1921 = $(`<div id="html_dc0932baf9dff0a6781192d19c2a1921" style="width: 100.0%; height: 100.0%;">         <b>Банк Дабрабыт</b><br>         <b>г. Минск, ул. Есенина, 30 (на пересечении с ул. Космонавтов)</b><br>             Курс покупки: 2.81<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_39c069182b5aeb36acef9b0138be9d1e.setContent(html_dc0932baf9dff0a6781192d19c2a1921);
+            
+        
+
+        circle_marker_549ce0f1f5c1808ca108f258e2cc9521.bindPopup(popup_39c069182b5aeb36acef9b0138be9d1e)
+        ;
+
+        
+    
+    
+            var circle_marker_6402984221722fca5f3ef4d5f6ecb47c = L.circleMarker(
+                [27.4442, 53.926],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_bcb57d7eb634791643cd728ea750d8e6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1edc34ac6d6377d8b7ee62ac5ff14aa2 = $(`<div id="html_1edc34ac6d6377d8b7ee62ac5ff14aa2" style="width: 100.0%; height: 100.0%;">         <b>Банк Дабрабыт</b><br>         <b>г. Минск, ул. Владислава Голубка, 2 (ТЦ "Бонус")</b><br>             Курс покупки: 2.78<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_bcb57d7eb634791643cd728ea750d8e6.setContent(html_1edc34ac6d6377d8b7ee62ac5ff14aa2);
+            
+        
+
+        circle_marker_6402984221722fca5f3ef4d5f6ecb47c.bindPopup(popup_bcb57d7eb634791643cd728ea750d8e6)
+        ;
+
+        
+    
+    
+            var circle_marker_e43874240e6407aa4b160c31aa44ff21 = L.circleMarker(
+                [27.476761, 53.858474],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_a0a81bde5553e5a22087463b53dea06a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d11ca25849fd49da26db1fa050098588 = $(`<div id="html_d11ca25849fd49da26db1fa050098588" style="width: 100.0%; height: 100.0%;">         <b>Банк Дабрабыт</b><br>         <b>г. Минск, пр. Дзержинского, 106 (ТЦ «Магнит»)</b><br>             Курс покупки: 2.78<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_a0a81bde5553e5a22087463b53dea06a.setContent(html_d11ca25849fd49da26db1fa050098588);
+            
+        
+
+        circle_marker_e43874240e6407aa4b160c31aa44ff21.bindPopup(popup_a0a81bde5553e5a22087463b53dea06a)
+        ;
+
+        
+    
+    
+            var circle_marker_f641292bf63d43185a5fb5c609d0f9d5 = L.circleMarker(
+                [27.555758, 53.916782],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_e3d283fe9a3c7122ef1544751a2028bf = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_00ee37b093d21d3150da8877a2fd40b5 = $(`<div id="html_00ee37b093d21d3150da8877a2fd40b5" style="width: 100.0%; height: 100.0%;">         <b>Белинвестбанк</b><br>         <b>г. Минск, пр. Машерова, 29</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_e3d283fe9a3c7122ef1544751a2028bf.setContent(html_00ee37b093d21d3150da8877a2fd40b5);
+            
+        
+
+        circle_marker_f641292bf63d43185a5fb5c609d0f9d5.bindPopup(popup_e3d283fe9a3c7122ef1544751a2028bf)
+        ;
+
+        
+    
+    
+            var circle_marker_3651b3cff99b438676d6be9e13dcb862 = L.circleMarker(
+                [27.686499, 53.943944],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_7bfaee03d66950cd3ce6116c7318b1f7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a245816f6960259a9e7a8556e4a50531 = $(`<div id="html_a245816f6960259a9e7a8556e4a50531" style="width: 100.0%; height: 100.0%;">         <b>Белинвестбанк</b><br>         <b>г. Минск, пр. Независимости, 164-8Н</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_7bfaee03d66950cd3ce6116c7318b1f7.setContent(html_a245816f6960259a9e7a8556e4a50531);
+            
+        
+
+        circle_marker_3651b3cff99b438676d6be9e13dcb862.bindPopup(popup_7bfaee03d66950cd3ce6116c7318b1f7)
+        ;
+
+        
+    
+    
+            var circle_marker_f7e3caa989bbf345923c34c7a9b892d1 = L.circleMarker(
+                [27.519776, 53.895374],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_7dd222326f2eb017f850c52781221b2f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4e48765a7cf602a9a0f49df963f91440 = $(`<div id="html_4e48765a7cf602a9a0f49df963f91440" style="width: 100.0%; height: 100.0%;">         <b>Белинвестбанк</b><br>         <b>г. Минск, ул. Коржа, 11а</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_7dd222326f2eb017f850c52781221b2f.setContent(html_4e48765a7cf602a9a0f49df963f91440);
+            
+        
+
+        circle_marker_f7e3caa989bbf345923c34c7a9b892d1.bindPopup(popup_7dd222326f2eb017f850c52781221b2f)
+        ;
+
+        
+    
+    
+            var circle_marker_10cd50ac320e03baae7720fec4758857 = L.circleMarker(
+                [27.546924, 53.892405],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_a38d7d9b3ac24afbbd5e7d7b2bbdeaf5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d2f33694fa405876c7af31326a7ae480 = $(`<div id="html_d2f33694fa405876c7af31326a7ae480" style="width: 100.0%; height: 100.0%;">         <b>Белинвестбанк</b><br>         <b>г. Минск, ул. Бобруйская, 9</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_a38d7d9b3ac24afbbd5e7d7b2bbdeaf5.setContent(html_d2f33694fa405876c7af31326a7ae480);
+            
+        
+
+        circle_marker_10cd50ac320e03baae7720fec4758857.bindPopup(popup_a38d7d9b3ac24afbbd5e7d7b2bbdeaf5)
+        ;
+
+        
+    
+    
+            var circle_marker_b2f3964e1f4b2be8c0c99adba969d7ea = L.circleMarker(
+                [27.480569, 53.849429],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_df2c0edb3d3e8660f9f72b94b5166bc4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_746b23074c007fb1857e98fa3b921eaa = $(`<div id="html_746b23074c007fb1857e98fa3b921eaa" style="width: 100.0%; height: 100.0%;">         <b>Белинвестбанк</b><br>         <b>г. Минск, ул. Я.Чечота, 11-196а</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_df2c0edb3d3e8660f9f72b94b5166bc4.setContent(html_746b23074c007fb1857e98fa3b921eaa);
+            
+        
+
+        circle_marker_b2f3964e1f4b2be8c0c99adba969d7ea.bindPopup(popup_df2c0edb3d3e8660f9f72b94b5166bc4)
+        ;
+
+        
+    
+    
+            var circle_marker_79aa1705bb300cbd7440f7336e73a859 = L.circleMarker(
+                [27.4985, 53.9212],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_6d2ef7ce9ba76412ecd9cab0d29caa90 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_077918c19b59b3e652b0b78f320cd21b = $(`<div id="html_077918c19b59b3e652b0b78f320cd21b" style="width: 100.0%; height: 100.0%;">         <b>Белинвестбанк</b><br>         <b>г. Минск, пр. Пушкина, 81-2н</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_6d2ef7ce9ba76412ecd9cab0d29caa90.setContent(html_077918c19b59b3e652b0b78f320cd21b);
+            
+        
+
+        circle_marker_79aa1705bb300cbd7440f7336e73a859.bindPopup(popup_6d2ef7ce9ba76412ecd9cab0d29caa90)
+        ;
+
+        
+    
+    
+            var circle_marker_ed2e6d49db17161a3bf061a3a36c6fea = L.circleMarker(
+                [27.558, 53.9005],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_dab72e2bea6fbf08618ebb0fdd19935b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4b2a8173c0692dbaa031df191d55cd30 = $(`<div id="html_4b2a8173c0692dbaa031df191d55cd30" style="width: 100.0%; height: 100.0%;">         <b>Белинвестбанк</b><br>         <b>г. Минск, пр. Независимости, 21 (ОАО "Гум")</b><br>             Курс покупки: 2.81<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_dab72e2bea6fbf08618ebb0fdd19935b.setContent(html_4b2a8173c0692dbaa031df191d55cd30);
+            
+        
+
+        circle_marker_ed2e6d49db17161a3bf061a3a36c6fea.bindPopup(popup_dab72e2bea6fbf08618ebb0fdd19935b)
+        ;
+
+        
+    
+    
+            var circle_marker_46791f17ec8f0eb561784d9972521d18 = L.circleMarker(
+                [27.6303, 53.8765],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_a258555213e38468d8cbe6c09eeed275 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5ae9517923a91ea15330123f0cc4e321 = $(`<div id="html_5ae9517923a91ea15330123f0cc4e321" style="width: 100.0%; height: 100.0%;">         <b>Белинвестбанк</b><br>         <b>г. Минск, ул. Жилуновича, 4 (Универмаг "Беларусь" 2 этаж)</b><br>             Курс покупки: 2.81<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_a258555213e38468d8cbe6c09eeed275.setContent(html_5ae9517923a91ea15330123f0cc4e321);
+            
+        
+
+        circle_marker_46791f17ec8f0eb561784d9972521d18.bindPopup(popup_a258555213e38468d8cbe6c09eeed275)
+        ;
+
+        
+    
+    
+            var circle_marker_20ddb2113e55148190b27af8daee588c = L.circleMarker(
+                [27.559845856147, 53.899259160549],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.88, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(marker_cluster_d2f4e4f360a11f4b36716ce67faf1178);
+        
+    
+        var popup_b090a151e8c323c1adcf286f821a4791 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4d82aa8fc0ba9c985423cc123cf2e00a = $(`<div id="html_4d82aa8fc0ba9c985423cc123cf2e00a" style="width: 100.0%; height: 100.0%;">         <b>Белинвестбанк</b><br>         <b>г. Минск, ул. Карла Маркса, 33-4Н, 8Н (вход со стороны ул.Ленина)</b><br>             Курс покупки: 2.82<br>             Курс продажи: 2.84<br>         </div>`)[0];
+                popup_b090a151e8c323c1adcf286f821a4791.setContent(html_4d82aa8fc0ba9c985423cc123cf2e00a);
+            
+        
+
+        circle_marker_20ddb2113e55148190b27af8daee588c.bindPopup(popup_b090a151e8c323c1adcf286f821a4791)
+        ;
+
+        
+    
+    
+            marker_cluster_d2f4e4f360a11f4b36716ce67faf1178.addTo(map_bba559052f624aebe8852dad2ee0c9cf);
+        
+    
+            var marker_ccd8a825be54159dc096d51571e116d3 = L.marker(
+                [27.5875, 53.9289],
+                {
+}
+            ).addTo(map_bba559052f624aebe8852dad2ee0c9cf);
+        
+    
+            var icon_a247ff14b1ef7cf0ecb5c01cffb75594 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9ffbe480c9e3f12879f23684381a0b33 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d42671cdeef7b971917bba7430355474 = $(`<div id="html_d42671cdeef7b971917bba7430355474" style="width: 100.0%; height: 100.0%;">🔥 <b>ЛУЧШИЙ КУРС</b><br><b>Банк Дабрабыт</b><br>2.78<br>г. Минск, Ул. Сурганова, 50 (ТЦ «РИГА»)</div>`)[0];
+                popup_9ffbe480c9e3f12879f23684381a0b33.setContent(html_d42671cdeef7b971917bba7430355474);
+            
+        
+
+        marker_ccd8a825be54159dc096d51571e116d3.bindPopup(popup_9ffbe480c9e3f12879f23684381a0b33)
+        ;
+
+        
+    
+    
+                marker_ccd8a825be54159dc096d51571e116d3.setIcon(icon_a247ff14b1ef7cf0ecb5c01cffb75594);
+            
+</script>
+</html>
