@@ -19,36 +19,6 @@ class DataLoader:
     
     def load_data(self) -> pd.DataFrame:
         """Запрашивает данные через парсер/кэш и возвращает DataFrame"""
-<<<<<<< HEAD
-        print(f"[INFO] Получение данных для {self.currency.name}...")
-
-        raw_data = get_data(self.currency)
-
-        data = []
-        for branch in raw_data:
-            buy_rate = None
-            sell_rate = None
-
-            for rate in branch.exchange_rates:
-                if rate.curr_to == "byn":
-                    buy_rate = rate.rate
-                elif rate.curr_from == "byn":
-                    sell_rate = rate.rate
-
-            if buy_rate and sell_rate:
-                data.append({
-                    "address": branch.address,
-                    "bank_name": str(branch.bank_org),
-                    "sell_course": float(sell_rate),
-                    "buy_course": float(buy_rate),
-                    "lat": float(branch.coords.lat),
-                    "lon": float(branch.coords.lon)
-                })
-
-        df = pd.DataFrame(data)
-        print(f"[INFO] Данные успешно загружены. Найдено отделений: {len(df)}")
-        return df
-=======
         branches = get_data(self.currency)
         return self._convert_to_dataframe(branches)
 
@@ -80,7 +50,6 @@ class DataLoader:
             raise ValueError(f"No buy_course (BYN->USD) rates found. Available branches: {len(df)}. Check if parser returned data with correct exchange rates.")
 
         return df.dropna(subset=["buy_course"])
->>>>>>> 42866260137d211fe9799273af3835200a16db6b
 
 class DataProcessor:
     """Обработка трансформаций и вычислений данных"""
@@ -162,30 +131,6 @@ class MapBuilder:
         
         return self
     
-<<<<<<< HEAD
-    def add_best_buy_marker(self, df: pd.DataFrame) -> "MapBuilder":
-        """Добавление маркера для лучшей покупки (минимальный курс покупки)"""
-        best = df.loc[df["buy_course"].idxmin()]
-        popup = f"💰 <b>ЛУЧШАЯ ПОКУПКА</b><br><b>{best['bank_name']}</b><br>Курс: {best['buy_course']}<br>{best['address']}"
-
-        folium.Marker(
-            location=[best["lat"], best["lon"]],
-            icon=folium.Icon(color="green", icon="arrow-down", prefix="fa"),
-            popup=popup
-        ).add_to(self.map)
-
-        return self
-
-    def add_best_sell_marker(self, df: pd.DataFrame) -> "MapBuilder":
-        """Добавление маркера для лучшей продажи (максимальный курс продажи)"""
-        best = df.loc[df["sell_course"].idxmax()]
-        popup = f"📈 <b>ЛУЧШАЯ ПРОДАЖА</b><br><b>{best['bank_name']}</b><br>Курс: {best['sell_course']}<br>{best['address']}"
-
-        folium.Marker(
-            location=[best["lat"], best["lon"]],
-            icon=folium.Icon(color="blue", icon="arrow-up", prefix="fa"),
-            popup=popup
-=======
     def add_best_rate_marker(self, df: pd.DataFrame) -> "MapBuilder":
         """Добавление звездных маркеров для лучшего курса покупки и продажи"""
         best_buy = df.loc[df["buy_course"].idxmin()]
@@ -204,7 +149,6 @@ class MapBuilder:
             location=[best_sell["lat"], best_sell["lon"]],
             icon=folium.Icon(color="blue", icon="star", prefix="fa"),
             popup=popup_sell
->>>>>>> 42866260137d211fe9799273af3835200a16db6b
         ).add_to(self.map)
 
         return self
@@ -248,8 +192,7 @@ class ExchangeMap:
 
         self.map_builder.add_heatmap(self.df)
         self.map_builder.add_markers(self.df)
-        self.map_builder.add_best_buy_marker(self.df)
-        self.map_builder.add_best_sell_marker(self.df)
+        self.map_builder.add_best_rate_marker(self.df)
 
         return self
     
