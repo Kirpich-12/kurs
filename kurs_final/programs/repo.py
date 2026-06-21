@@ -74,7 +74,6 @@ class DataRepo:
         ]
 
         return BankBranch(
-            id=db_branch.id,  # Предполагаю, что id есть в вашем классе BankBranch
             bank_org=BankOrg(db_branch.bank_org),
             address=db_branch.address,
             coords=Coords(lon=db_branch.lon, lat=db_branch.lat),
